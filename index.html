@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+    <title>SkyInsight | African Aviation Intelligence</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@tensorflow/tfjs@4.15.0/dist/tf.min.js"></script>
+</head>
+<body>
+    <div class="dashboard">
+        <!-- Header -->
+        <div class="header">
+            <div>
+                <h1>SkyInsight</h1>
+                <p class="subtitle"><i>An African Aviation Intelligence Tool</i></p>
+            </div>
+            <div class="actions">
+                <button id="csvBtn" class="sec-btn">📄 CSV</button>
+                <button id="pdfBtn" class="sec-btn">📑 PDF Report</button>
+            </div>
+        </div>
+
+        <!-- KPI Cards -->
+        <div class="kpi-row">
+            <div class="kpi-card">
+                <span class="kpi-label">LIVE FLIGHTS</span>
+                <span class="kpi-value" id="liveFlightsCount">0</span>
+            </div>
+            <div class="kpi-card">
+                <span class="kpi-label">AIRBORNE</span>
+                <span class="kpi-value" id="airborneCount">0</span>
+            </div>
+        </div>
+
+        <!-- Main grid: Map + Alert panel -->
+        <div class="main-grid">
+            <div class="map-panel">
+                <div class="panel-header">Live Aircraft Positions (updates every 20 sec)</div>
+                <div id="map"></div>
+            </div>
+            <div class="alert-panel">
+                <div class="panel-header">Predictive Delay & Live Alerts</div>
+                <div id="alertList" class="alert-list">Loading flights...</div>
+            </div>
+        </div>
+
+        <!-- Filter row: Airline + Status -->
+        <div class="filter-row">
+            <label>Airline</label>
+            <select id="airlineFilter">
+                <option value="all">All Airlines</option>
+                <option value="Ethiopian Airlines">Ethiopian Airlines</option>
+                <option value="South African Airways">South African Airways</option>
+                <option value="EgyptAir">EgyptAir</option>
+                <option value="Kenya Airways">Kenya Airways</option>
+                <option value="Royal Air Maroc">Royal Air Maroc</option>
+                <option value="Air Mauritius">Air Mauritius</option>
+                <option value="TAAG Angola Airlines">TAAG Angola Airlines</option>
+                <option value="Air Botswana">Air Botswana</option>
+            </select>
+            <label>Status</label>
+            <select id="statusFilter">
+                <option value="all">All</option>
+                <option value="airborne">Airborne</option>
+                <option value="ground">On Ground</option>
+            </select>
+        </div>
+
+        <!-- Weather strip (horizontal) -->
+        <div class="weather-strip" id="weatherStrip">
+            <div class="weather-card-small">Loading weather...</div>
+        </div>
+
+        <!-- Right column: Performance Gauge + Congestion + ETA Table -->
+        <div class="two-columns">
+            <div class="col">
+                <div class="card score-card">
+                    <h2>Airline Performance Score</h2>
+                    <canvas id="scoreGauge" width="150" height="150" style="width:150px; height:150px; margin:0 auto;"></canvas>
+                    <div id="scoreValue" class="score-percent">--</div>
+                </div>
+                <div class="card">
+                    <h2>Congestion Index</h2>
+                    <div id="congestionBadge" class="congestion-badge">--</div>
+                </div>
+            </div>
+            <div class="col">
+                <div class="card">
+                    <h2>Estimated Times (ETA / ETD)</h2>
+                    <div class="eta-table-wrapper">
+                        <table id="etaTable">
+                            <thead>
+                                <tr><th>Flight</th><th>Airline</th><th>Origin</th><th>Destination</th><th>ETD</th><th>ETA</th><th>Status</th></tr>
+                            </thead>
+                            <tbody></tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+    <script src="script.js"></script>
+</body>
+                  </html>
